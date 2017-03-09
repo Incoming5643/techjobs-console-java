@@ -76,14 +76,31 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
 
         return jobs;
     }
+    /**
+     * Check for a term in all columns.
+    */
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        loadData(); //Better safe than sorry
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
+        for(HashMap<String, String> Entry : allJobs) {
+            for(String key : Entry.keySet()) {
+                String compare = Entry.get(key).toLowerCase();
+                if(compare.contains(value.toLowerCase())) {
+                    jobs.add(Entry);
+                    break; //Already matched so escape innermost loop
+                }
+            }
+        }
+        return jobs;
+    }
     /**
      * Read in data from a CSV file and store it in a list
      */
