@@ -3,6 +3,7 @@ package org.launchcode.techjobs.console;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -90,11 +91,10 @@ public class JobData {
         loadData(); //Better safe than sorry
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for(HashMap<String, String> Entry : allJobs) {
-            for(String key : Entry.keySet()) {
-                String compare = Entry.get(key).toLowerCase();
-                if(compare.contains(value.toLowerCase())) {
-                    jobs.add(Entry);
+        for(HashMap<String, String> entry : allJobs) {
+            for(String compare : entry.values()) {
+                if(StringUtils.containsIgnoreCase(compare, value)) {
+                    jobs.add(entry);
                     break; //Already matched so escape innermost loop
                 }
             }
